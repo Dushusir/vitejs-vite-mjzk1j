@@ -79,6 +79,7 @@ import { UniverFindReplacePlugin } from '@univerjs/find-replace';
 import { UniverSheetsFindReplacePlugin } from '@univerjs/sheets-find-replace';
 //导入导出
 import { UniverSheetsExchangeClientPlugin } from '@univerjs-pro/sheets-exchange-client';
+import { UniverRPCMainThreadPlugin } from '@univerjs/rpc';
 
 import { zhCN, enUS } from 'univer:locales';
 
@@ -122,7 +123,7 @@ const init = async () => {
 
   // core plugins
   univer.registerPlugin(UniverRenderEnginePlugin);
-  univer.registerPlugin(UniverFormulaEnginePlugin);
+  univer.registerPlugin(UniverFormulaEnginePlugin, { notExecuteFormula: true });
   univer.registerPlugin(UniverUIPlugin, {
     container: container.value!,
   });
@@ -134,7 +135,7 @@ const init = async () => {
   univer.registerPlugin(UniverDocsUIPlugin);
 
   // sheet plugins
-  univer.registerPlugin(UniverSheetsPlugin);
+  univer.registerPlugin(UniverSheetsPlugin, { notExecuteFormula: true });
   univer.registerPlugin(UniverSheetsUIPlugin, {
     menu: {
       ['sheet.command.add-range-protection-from-toolbar']: {
@@ -142,7 +143,7 @@ const init = async () => {
       },
     },
   });
-  univer.registerPlugin(UniverSheetsFormulaPlugin);
+  univer.registerPlugin(UniverSheetsFormulaPlugin, { notExecuteFormula: true });
   //数据校验
   univer.registerPlugin(UniverDataValidationPlugin);
   univer.registerPlugin(UniverSheetsDataValidationPlugin);
@@ -159,6 +160,13 @@ const init = async () => {
   univer.registerPlugin(UniverFindReplacePlugin);
   univer.registerPlugin(UniverSheetsFindReplacePlugin);
 
+  univer.registerPlugin(UniverRPCMainThreadPlugin, {
+    workerURL: new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'module'
+}),
+} as IUniverRPCMainThreadConfig);
+  
+
   //注册自定义命令
   //univer.registerPlugin(RegisterCustomCommandPlugin);
   //导入导出
@@ -172,9 +180,8 @@ const init = async () => {
     workbookData
   );
 
-  const injector = univerRef.value?.__getInjector();
-  const calculateFormulaService = injector.get(CalculateFormulaService);
-  calculateFormulaService.executionCompleteListener$.subscribe((data) => {
+  const formula = univerAPI.value.getFormula();
+  formula.calculationEnd((functionsExecutedState) => {
     //执行自定义命令
     spinning.value = false;
   });
