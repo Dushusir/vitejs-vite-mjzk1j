@@ -1,0 +1,53 @@
+{
+  "name": "vite-vue-typescript-starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.38",
+    "@types/qs": "^6.9.15",
+    "@univerjs-pro/exchange-client": "^0.2.8",
+    "@univerjs-pro/facade": "^0.2.8",
+    "@univerjs-pro/sheets-exchange-client": "^0.2.8",
+    "@univerjs/core": "^0.2.8",
+    "@univerjs/data-validation": "^0.2.8",
+    "@univerjs/design": "^0.2.8",
+    "@univerjs/docs": "^0.2.8",
+    "@univerjs/docs-ui": "^0.2.8",
+    "@univerjs/engine-formula": "^0.2.8",
+    "@univerjs/engine-render": "^0.2.8",
+    "@univerjs/find-replace": "^0.2.8",
+    "@univerjs/sheets": "^0.2.8",
+    "@univerjs/sheets-conditional-formatting": "^0.2.8",
+    "@univerjs/sheets-conditional-formatting-ui": "^0.2.8",
+    "@univerjs/sheets-data-validation": "^0.2.8",
+    "@univerjs/sheets-filter": "^0.2.8",
+    "@univerjs/sheets-filter-ui": "^0.2.8",
+    "@univerjs/sheets-find-replace": "^0.2.8",
+    "@univerjs/sheets-formula": "^0.2.8",
+    "@univerjs/sheets-numfmt": "^0.2.8",
+    "@univerjs/sheets-ui": "^0.2.8",
+    "@univerjs/ui": "^0.2.8",
+    "ant-design-vue": "^4.2.3",
+    "pako": "^2.1.0",
+    "qs": "^6.13.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^22.4.2",
+    "@types/pako": "^2.0.3",
+    "@univerjs/vite-plugin": "^0.5.0",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "@vitejs/plugin-vue-jsx": "^4.0.1",
+    "@vue/tsconfig": "^0.5.1",
+    "npm-run-all2": "^6.2.2",
+    "typescript": "~5.5.4",
+    "vite": "^5.4.2",
+    "vue-tsc": "^2.0.29"
+  }
+}
