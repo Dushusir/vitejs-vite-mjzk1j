@@ -86,6 +86,7 @@ import { zhCN, enUS } from 'univer:locales';
 import { mock_data } from '@/assets/mock';
 import { testDataValidation } from './assets/snapshot';
 
+
 //注册自定义命令
 /*import RegisterCustomCommandPlugin from "@/plugins/RegisterCustomCommandPlugin";
 
@@ -162,9 +163,7 @@ const init = async () => {
   univer.registerPlugin(UniverSheetsFindReplacePlugin);
 
   univer.registerPlugin(UniverRPCMainThreadPlugin, {
-      workerURL: new Worker(new URL('./worker.js', import.meta.url), {
-      type: 'module'
-    }),
+    workerURL: new Worker(new URL('./worker.js', import.meta.url), { type: 'module' }),
   } as IUniverRPCMainThreadConfig);
   
 
