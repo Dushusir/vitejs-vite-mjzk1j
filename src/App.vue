@@ -59,7 +59,7 @@ import {
 } from '@univerjs/sheets';
 import { UniverSheetsFormulaPlugin } from '@univerjs/sheets-formula';
 import { UniverSheetsUIPlugin } from '@univerjs/sheets-ui';
-import { UniverUIPlugin } from '@univerjs/ui';
+import { IProgressService, UniverUIPlugin } from '@univerjs/ui';
 //import { FUniver } from "@univerjs/facade";
 import { FUniver } from '@univerjs-pro/facade';
 import { UniverDataValidationPlugin } from '@univerjs/data-validation';
@@ -84,6 +84,7 @@ import { UniverRPCMainThreadPlugin } from '@univerjs/rpc';
 import { zhCN, enUS } from 'univer:locales';
 
 import { mock_data } from '@/assets/mock';
+import { testDataValidation } from './assets/snapshot';
 
 //注册自定义命令
 /*import RegisterCustomCommandPlugin from "@/plugins/RegisterCustomCommandPlugin";
@@ -161,10 +162,10 @@ const init = async () => {
   univer.registerPlugin(UniverSheetsFindReplacePlugin);
 
   univer.registerPlugin(UniverRPCMainThreadPlugin, {
-    workerURL: new Worker(new URL('./worker.js', import.meta.url), {
-  type: 'module'
-}),
-} as IUniverRPCMainThreadConfig);
+      workerURL: new Worker(new URL('./worker.js', import.meta.url), {
+      type: 'module'
+    }),
+  } as IUniverRPCMainThreadConfig);
   
 
   //注册自定义命令
@@ -174,7 +175,7 @@ const init = async () => {
 
   univerAPI.value = FUniver.newAPI(univer);
   //请求Excel数据
-  let workbookData = mock_data;
+  let workbookData = testDataValidation;
   workbook.value = univer.createUnit<IWorkbookData, Workbook>(
     UniverInstanceType.UNIVER_SHEET,
     workbookData
@@ -184,6 +185,9 @@ const init = async () => {
   formula.calculationEnd((functionsExecutedState) => {
     //执行自定义命令
     spinning.value = false;
+
+    // 暂时处理进度条不消失问题
+    univer.__getInjector().get(IProgressService).stop();
   });
 };
 //保存
